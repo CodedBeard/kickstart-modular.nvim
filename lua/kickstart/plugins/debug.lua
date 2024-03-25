@@ -45,6 +45,23 @@ return {
       },
     }
 
+    dap.adapters.coreclr = {
+      type = 'executable',
+      command = '/usr/local/bin/netcoredbg/netcoredbg',
+      args = { '--interpreter=vscode' },
+    }
+
+    dap.configurations.cs = {
+      {
+        type = 'coreclr',
+        name = 'launch - netcoredbg',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to dll ', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+        end,
+      },
+    }
+
     -- Basic debugging keymaps, feel free to change to your liking!
     vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
     vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
